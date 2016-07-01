@@ -1,0 +1,15 @@
+<ion-toolbar *ngIf="!auth || !auth.user">
+  <ion-title>Login first →</ion-title>
+
+  <ion-buttons end>
+    <button (click)="showLoginPopup()">
+      <ion-icon name="power"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content padding class="home">
+    <post-card [post]="post" *ngFor="let post of postsArray()"></post-card>
+</ion-content>
+
+
