@@ -37,7 +37,7 @@ var isRelease = argv.indexOf('--release') > -1;
 
 gulp.task('watch', ['clean'], function (done) {
     runSequence(
-        ['sass', 'html', 'fonts', 'scripts'],
+        ['sass', 'html', 'fonts', 'scripts', 'service-worker-copy-toolbox'],
         function () {
             gulpWatch('app/**/*.scss', function () {
                 gulp.start('sass');
@@ -45,16 +45,22 @@ gulp.task('watch', ['clean'], function (done) {
             gulpWatch('app/**/*.html', function () {
                 gulp.start('html');
             });
-            buildBrowserify({watch: true}).on('end', function(){
-                generateServiceWorker(done);
-            });
+            buildBrowserify({watch: true})
+                .on('end', function () {
+                    gulp.start('generate-service-worker');
+                    done();
+                })
+
+            ;
         }
-    );
+    )
+    ;
 });
 
 gulp.task('build', ['clean'], function (done) {
     runSequence(
-        ['sass', 'html', 'fonts', 'scripts'],
+        ['sass', 'html', 'fonts', 'scripts', 'service-worker-copy-toolbox'],
+        'generate-service-worker',
         function () {
             buildBrowserify({
                 minify: isRelease,
@@ -64,9 +70,11 @@ gulp.task('build', ['clean'], function (done) {
                 uglifyOptions: {
                     mangle: false
                 }
-            }).on('end', function(){
-                generateServiceWorker(done);
-            });
+            })
+                .on('end', function () {
+                    gulp.start('generate-service-worker');
+                    done();
+                })
 
 
         }
@@ -84,26 +92,56 @@ gulp.task('clean', function () {
 
 /*CUSTOM PART*/
 var generateServiceWorker = function (done) {
+    var swPrecacheFileName = 'sw.js';
+    gulpWatch('www/**/!(' + swPrecacheFileName + '|sw.js)', function () {
+        gulp.start('generate-service-worker');
+    });
+
     var path = require('path');
     var swPrecache = require('sw-precache');
     var rootDir = "./www";
 
-    swPrecache.write(path.join(rootDir + '/sw.js'), {
-        staticFileGlobs: [rootDir + '/build/**/*.{js,html,css,png,jpg,gif,svg,eot,ttf,woff}'],
-        stripPrefix: rootDir
+
+    /**
+     * Service Worker Configuration. This bad boy is all the settings we need
+     * */
+    swPrecache.write(path.join(rootDir, swPrecacheFileName), {
+        staticFileGlobs: [rootDir + '/build/**/*', rootDir + '/index.html'],
+        stripPrefix: rootDir,
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        ignoreUrlParametersMatching: [/^utm_/, /^v$/, /^ser$/],
+        //for our firebase (assets) caching and firebase API calls
+        runtimeCaching: [
+            {
+                urlPattern: /.*\.firebaseio\.com/,
+                handler: 'networkFirst'
+            }
+            /*,
+            {
+                urlPattern: /\/articles\//,
+                handler: 'fastest',
+                options: {
+                    cache: {
+                        maxEntries: 10,
+                        name: 'articles-cache'
+                    }
+                }
+            }*/]
     }, done);
 };
 
+
 gulp.task('generate-service-worker', generateServiceWorker);
 
-/*var customCopy = function () {
- options = {};
- options.src =
- [
- 'node_modules/sw-toolbox/sw-toolbox.js'
- ];
- options.dest = 'www/build/js';
- return gulp.src(options.src)
- .pipe(gulp.dest(options.dest));
- };
- gulp.task('customCopy', customCopy);*/
+
+var serviceWorkerCopyToolbox = function () {
+    options = {};
+    options.src =
+        [
+            'node_modules/sw-toolbox/sw-toolbox.js'
+        ];
+    options.dest = 'www/build/js';
+    return gulp.src(options.src)
+        .pipe(gulp.dest(options.dest));
+};
+gulp.task('service-worker-copy-toolbox', serviceWorkerCopyToolbox);

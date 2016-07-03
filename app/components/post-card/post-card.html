@@ -1,13 +1,14 @@
 <ion-card>
     <ion-item>
         <ion-avatar item-left>
-            <img src="img/marty-avatar.png">
+            <div *ngFor="let usr of creator | async ">
+                <img src="{{usr.photoURL}}">
+            </div>
+
         </ion-avatar>
         <h2>{{post.creator_name}}</h2>
 
     </ion-item>
-
-    <img src="img/advance-card-bttf.png">
 
     <ion-card-content>
         <p>{{post.text}}</p>
@@ -16,19 +17,13 @@
     <ion-row>
         <ion-col>
             <button primary clear small>
-                <ion-icon name="thumbs-up"></ion-icon>
-                <div>12 Likes</div>
-            </button>
-        </ion-col>
-        <ion-col>
-            <button primary clear small>
                 <ion-icon name="text"></ion-icon>
-                <div>4 Comments</div>
+                <div>{{post.comments.length}} Comments</div>
             </button>
         </ion-col>
         <ion-col center text-center>
             <ion-note>
-                11h ago
+                {{ (post.timestamp | amFromUnix) | amTimeAgo }}
             </ion-note>
         </ion-col>
     </ion-row>

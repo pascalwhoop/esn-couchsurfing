@@ -2,6 +2,9 @@
   "devDependencies": {},
   "globalDependencies": {
     "es6-shim": "registry:dt/es6-shim#0.31.2+20160602141504",
-    "firebase3": "https://raw.githubusercontent.com/angular/angularfire2/master/manual_typings/firebase3/firebase3.d.ts"
+    "firebase3": "https://raw.githubusercontent.com/angular/angularfire2/master/manual_typings/firebase3/firebase3.d.ts",
+    "moment": "registry:dt/moment#2.8.0+20160316155526",
+    "moment-node": "registry:dt/moment-node#2.11.1+20160511043338",
+    "service_worker_api": "registry:dt/service_worker_api#0.0.0+20150323201954"
   }
 }

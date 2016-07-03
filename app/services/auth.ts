@@ -1,6 +1,9 @@
 import {NgZone, Injectable} from "@angular/core";
 import auth = firebase.auth;
 import User = firebase.User;
+import {MyApp} from "../app";
+
+declare var window;
 
 @Injectable()
 export class Auth{
@@ -14,7 +17,7 @@ export class Auth{
                 this._ngZone.run(()=>{this.user = user;});
             } else {
                 this.user = null;
-                console.log("noooo")
+                console.log("Not logged in")
 
             }
         });

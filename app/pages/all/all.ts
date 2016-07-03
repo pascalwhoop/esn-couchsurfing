@@ -3,10 +3,12 @@ import {NavController, Popover} from "ionic-angular";
 import {LoginPopover} from "../settings/login-popover";
 import {Auth} from "../../services/auth";
 import database = firebase.database;
+
 import {Model} from "../../model/Model";
 import DataSnapshot = firebase.database.DataSnapshot;
 import * as _ from "underscore";
 import {PostCard} from "../../components/post-card/post-card";
+import {AngularFire, FirebaseListObservable} from "angularfire2/angularfire2";
 
 @Component({
     templateUrl: 'build/pages/all/all.html',
@@ -15,7 +17,7 @@ import {PostCard} from "../../components/post-card/post-card";
 })
 export class AllPage {
     
-    posts: Map<String, any>;
+    posts: FirebaseListObservable<any>;
     postsArray(){
         if(!this.posts) return [];
         else return _.values(this.posts);
@@ -24,13 +26,10 @@ export class AllPage {
 
     constructor(
         private navController:NavController,
-        private auth: Auth) {
+        private auth: Auth,
+        af: AngularFire) {
 
-        console.log("getting stuff from DB");
-        let postsRef = database().ref('posts/');
-        postsRef.once('value').then((snapshot : DataSnapshot)=>{
-            this.posts = snapshot.val();
-        })
+        this.posts = af.database.list('posts');
     }
 
     showLoginPopup() {

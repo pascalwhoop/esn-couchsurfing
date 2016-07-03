@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Ionic</title>
+    <link rel="manifest" href="manifest.json">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
@@ -11,6 +12,10 @@
     <link ios-href="build/css/app.ios.css" rel="stylesheet">
     <link md-href="build/css/app.md.css" rel="stylesheet">
     <link wp-href="build/css/app.wp.css" rel="stylesheet">
+
+    <script type="text/javascript">
+        //window.WebSocket = undefined;
+    </script>
 </head>
 <body>
 <base href=".">
@@ -20,7 +25,7 @@
 
 
 <!-- cordova.js required for cordova apps -->
-<script src="cordova.js"></script>
+<!--<script src="cordova.js"></script>-->
 <!-- Polyfill needed for platforms without Promise and Collection support -->
 <script src="build/js/es6-shim.min.js"></script>
 <!-- Zone.js and Reflect-metadata  -->
@@ -28,14 +33,5 @@
 <script src="build/js/zone.js"></script>
 <!-- the bundle which is built from the app's source code -->
 <script src="build/js/app.bundle.js"></script>
-
-<!--Install Service Worker-->
-<script>
-    if('serviceWorker' in navigator) {
-        navigator.serviceWorker
-                .register('/sw.js')
-                .then(function() { console.log("Service Worker Registered"); });
-    }
-</script>
 </body>
 </html>
