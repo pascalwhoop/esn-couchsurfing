@@ -35,7 +35,8 @@
 
     <!--comments list-->
     <div *ngIf="visible=='comments'">
-            <post-comment *ngFor="let comment of comments | async" [comment]="comment"></post-comment>
+            <post-comment *ngFor="let comment of (comments | async) | reverse"
+                          [comment]="comment"></post-comment>
     </div>
 
 

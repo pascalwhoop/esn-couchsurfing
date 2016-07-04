@@ -11,13 +11,14 @@ import {TimeAgoPipe, FromUnixPipe} from "angular2-moment/index";
 import {NavController} from "ionic-angular/index";
 import {PostComment} from "../post-comment/post-comment";
 import {PostReply} from "../post-reply/post-reply";
+import {ReversePipe} from "../../pipes/reverse/reverse";
 
 
 @Component({
     templateUrl: 'build/components/post-card/post-card.html',
     selector: 'post-card',
     directives: [PostComment, PostReply],
-    pipes: [TimeAgoPipe, FromUnixPipe],
+    pipes: [TimeAgoPipe, FromUnixPipe, ReversePipe],
 
 })
 export class PostCard implements OnChanges {
@@ -53,7 +54,7 @@ export class PostCard implements OnChanges {
     }
 
     private setComments(postId:string) {
-        this.comments = this.db.list('/posts/' + postId + '/comments');
+        this.comments = this.db.list('/posts/' + postId + '/comments', {query: {orderByChild: 'timestamp'}});
     }
 
     private setCreator(userUid:string):void {
