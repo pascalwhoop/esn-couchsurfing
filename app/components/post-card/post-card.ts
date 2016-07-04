@@ -1,39 +1,63 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, OnChanges, SimpleChanges} from "@angular/core";
 import {Model} from "../../model/Model";
-import {AngularFire, FirebaseDatabase, FirebaseListObservable} from "angularfire2/angularfire2";
-import {QueryTemplates} from '../../services/query-templates';
-import * as moment from 'moment';
+import {
+    AngularFire,
+    FirebaseDatabase,
+    FirebaseListObservable,
+    FirebaseObjectObservable,
+    FirebaseAuth
+} from "angularfire2/angularfire2";
 import {TimeAgoPipe, FromUnixPipe} from "angular2-moment/index";
-
-
-
-
+import {NavController} from "ionic-angular/index";
+import {PostComment} from "../post-comment/post-comment";
+import {PostReply} from "../post-reply/post-reply";
 
 
 @Component({
     templateUrl: 'build/components/post-card/post-card.html',
     selector: 'post-card',
+    directives: [PostComment, PostReply],
     pipes: [TimeAgoPipe, FromUnixPipe],
 
 })
-export class PostCard{
-    
+export class PostCard implements OnChanges {
+
     @Input()
-    post : Model.Post;
+    post:Model.Post;
+    creator:FirebaseObjectObservable<Model.PublicUserProfile>;
+    comments:FirebaseListObservable<Model.Comment[]>;
 
-    _creator : FirebaseListObservable<Model.PublicUserProfile[]>;
 
-    private db : FirebaseDatabase;
-    
-    constructor(af : AngularFire){
+    private db:FirebaseDatabase;
+    private nav:NavController;
+    private auth:FirebaseAuth;
+
+    constructor(af:AngularFire, nav:NavController) {
+        this.auth = af.auth;
         this.db = af.database;
+        this.nav = nav;
     }
-    
-    get creator() : FirebaseListObservable<Model.PublicUserProfile[]>{
-        if(!this._creator){
-            this._creator = this.db.list('/users', {query: QueryTemplates.userQuery(this.post.user_uid) });
+
+
+    ngOnChanges(changes:SimpleChanges):any {
+        //watch for setting of input variable and then set creator
+        for (let propName in changes) {
+            if (propName == "post") {
+                let chng = changes[propName];
+                console.log("post changed");
+
+                this.setCreator(chng.currentValue.user_uid);
+                this.setComments("post" + chng.currentValue.timestamp);
+            }
         }
-        return this._creator;
+    }
+
+    private setComments(postId:string) {
+        this.comments = this.db.list('/posts/' + postId + '/comments');
+    }
+
+    private setCreator(userUid:string):void {
+        this.creator = this.db.object('/users/' + userUid);
     }
 
 

@@ -3,7 +3,7 @@
     <ion-title>All</ion-title>
 
     <ion-buttons end >
-      <button (click)="showLoginPopup()" *ngIf="!auth || !auth.user">
+      <button (click)="showLoginPopup()" *ngIf="!auth">
         <ion-icon name="power"></ion-icon>
       </button>
     </ion-buttons>
@@ -11,6 +11,7 @@
 </ion-header>
 
 <ion-content class="home">
+
     <post-card [post]="post" *ngFor="let post of posts | async"></post-card>
 </ion-content>
 

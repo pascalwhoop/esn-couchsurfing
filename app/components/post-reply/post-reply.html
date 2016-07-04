@@ -1,0 +1,16 @@
+<ion-list>
+    <ion-item>
+        <ion-label floating>Response</ion-label>
+        <ion-textarea #message></ion-textarea>
+
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Attach hosting offer</ion-label>
+        <ion-checkbox #hostingOffer secondary checked="false"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+        <button block clear small (click)="submit(message.value, hostingOffer)">Submit</button>
+    </ion-item>
+</ion-list>

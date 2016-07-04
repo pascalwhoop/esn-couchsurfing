@@ -1,0 +1,9 @@
+<ion-item>
+    <ion-avatar item-left>
+        <img src="{{(creator | async )?.photoURL}}">
+    </ion-avatar>
+
+    <h2>{{(creator | async)?.displayName}}</h2>
+    <h3>{{comment.timestamp | amTimeAgo}}</h3>
+    <p>{{comment.text}}</p>
+</ion-item>

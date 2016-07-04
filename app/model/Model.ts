@@ -1,6 +1,15 @@
 export module Model {
+    
+    //Angular FIre List Entries include the $key variable
+    export interface IAFListEntry {
+        $key? : string;
+    }
 
-    export interface Comment {
+    export interface IUid{
+        uid: string;
+    }
+
+    export interface Comment extends IAFListEntry{
         text:string;
         timestamp:any;
         user_uid:string;
@@ -13,9 +22,9 @@ export module Model {
         stay_start:number;
     }
 
-    export interface Post {
+    export interface Post extends IAFListEntry{
         creator_name:string;
-        comments:Comment[];
+        comments:any; //todo fix
         details:PostDetails;
         text:string;
         timestamp:number;
@@ -26,7 +35,7 @@ export module Model {
     /**
      * A User profile that is stored in the Database and can be fetched by any other user.
      */
-    export interface PublicUserProfile {
+    export interface PublicUserProfile extends IAFListEntry{
         displayName:string;
         email:string;
         emailVerified:boolean;
@@ -42,6 +51,16 @@ export module Model {
         photoURL:string;
         providerId:string;
         uid:string;
+    }
+
+    /* Sections */
+    export interface EsnSection extends IAFListEntry, IUid{
+        name: string,
+        city: string,
+        university: string
+        tags?: string
+        url ?: string
+        fbUrl ?: string
     }
 
 
