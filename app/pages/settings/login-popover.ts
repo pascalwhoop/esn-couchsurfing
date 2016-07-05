@@ -7,7 +7,7 @@ import {SettingsPage} from "./settings";
 })
 export class LoginPopover {
     triggerFBPopup(){
-        this.settings.signInWithFacebook();
+        this.settings.login();
     }
     
     constructor(private settings : SettingsPage) {

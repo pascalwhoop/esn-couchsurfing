@@ -11,7 +11,7 @@ import {TimeAgoPipe, FromUnixPipe} from "angular2-moment/index";
 import {NavController} from "ionic-angular/index";
 import {PostComment} from "../post-comment/post-comment";
 import {PostReply} from "../post-reply/post-reply";
-import {ReversePipe} from "../../pipes/reverse/reverse";
+import {ReversePipe} from "../../pipes/reverse";
 
 
 @Component({

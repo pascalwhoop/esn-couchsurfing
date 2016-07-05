@@ -17,6 +17,7 @@ export module Model {
 
     export interface PostDetails {
         city_name:string;
+        section_id: string;
         people:number;
         stay_end:number;
         stay_start:number;
@@ -24,11 +25,26 @@ export module Model {
 
     export interface Post extends IAFListEntry{
         creator_name:string;
-        comments:any; //todo fix
-        details:PostDetails;
+        comments ?:any; //todo fix
+        details :PostDetails;
         text:string;
         timestamp:number;
         user_uid:string;
+    }
+
+    export interface Section extends IAFListEntry {
+        c: string;
+        facebook: string;
+        l: string;
+        latitude: string;
+        longitude: string;
+        postaladdress: string;
+        sc: string;
+        sectionname: string;
+        street: string;
+        subject: string;
+        subject_id: string;
+        website: string;
     }
 
 
