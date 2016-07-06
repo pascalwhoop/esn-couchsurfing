@@ -1,16 +1,14 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>All</ion-title>
-
-    <ion-buttons end >
-      <button (click)="showLoginPopup()" *ngIf="!auth">
+<ion-content class="home">
+    <!--just to push content down, not actually used-->
+  <ion-toolbar *ngIf="!(af.auth | async)" light>
+    <ion-title>Login to reply and interact</ion-title>
+    <ion-buttons end>
+      <button (click)="showSettings()">
         <ion-icon name="power"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
 
-<ion-content class="home">
 
     <post-card [post]="post" *ngFor="let post of posts | async"></post-card>
 </ion-content>

@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 import {Model} from "../../model/Model";
 import {
     AngularFire,
@@ -21,7 +21,7 @@ import {ReversePipe} from "../../pipes/reverse";
     pipes: [TimeAgoPipe, FromUnixPipe, ReversePipe],
 
 })
-export class PostCard implements OnChanges {
+export class PostCard implements OnInit {
 
     @Input()
     post:Model.Post;
@@ -40,17 +40,9 @@ export class PostCard implements OnChanges {
     }
 
 
-    ngOnChanges(changes:SimpleChanges):any {
-        //watch for setting of input variable and then set creator
-        for (let propName in changes) {
-            if (propName == "post") {
-                let chng = changes[propName];
-                console.log("post changed");
-
-                this.setCreator(chng.currentValue.user_uid);
-                this.setComments("post" + chng.currentValue.timestamp);
-            }
-        }
+    ngOnInit():any {
+        this.setCreator(this.post.user_uid);
+        this.setComments(this.post.$key);
     }
 
     private setComments(postId:string) {

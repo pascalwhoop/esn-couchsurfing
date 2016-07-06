@@ -115,6 +115,10 @@ var generateServiceWorker = function (done) {
             {
                 urlPattern: /.*\.firebaseio\.com/,
                 handler: 'networkFirst'
+            },
+            {
+                urlPattern: /.*.fbcdn\.net/,
+                handler: 'fastest'
             }
             /*,
             {

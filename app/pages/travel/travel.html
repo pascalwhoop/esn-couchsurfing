@@ -1,9 +1,14 @@
 <ion-header>
-    <ion-toolbar>
-        <button (click)="showNewTravelModal()" full secondary>New Request</button>
-    </ion-toolbar>
+   <ion-navbar>
+       <ion-buttons end>
+           <button (click)="showNewTravelModal()">
+               <ion-icon name="create"></ion-icon>
+           </button>
+       </ion-buttons>
+       <ion-title>Your requests</ion-title>
+   </ion-navbar>
 </ion-header>
 
 <ion-content>
-
+    <post-card [post]="post" *ngFor="let post of posts | async"></post-card>
 </ion-content>

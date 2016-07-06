@@ -1,6 +1,6 @@
-<ion-tabs>
-  <ion-tab [root]="all" tabTitle="All" tabIcon="contacts"></ion-tab>
-  <ion-tab [root]="host" tabTitle="Host" tabIcon="home"></ion-tab>
-  <ion-tab [root]="travel" tabTitle="Travel" tabIcon="plane"></ion-tab>
-  <ion-tab [root]="settings" tabTitle="Settings" tabIcon="settings"></ion-tab>
+<ion-tabs #tabsComp [selectedIndex]="tabsIndex">
+    <ion-tab [root]="all" tabTitle="All" tabIcon="contacts"></ion-tab>
+    <ion-tab *ngIf="test" [root]="host" tabTitle="Host" tabIcon="home"></ion-tab>
+    <ion-tab *ngIf="af.auth | async" [root]="travel" tabTitle="Travel" tabIcon="plane"></ion-tab>
+    <ion-tab *ngIf="af.auth | async" [root]="settings" tabTitle="Settings" tabIcon="settings"></ion-tab>
 </ion-tabs>

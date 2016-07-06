@@ -1,0 +1,25 @@
+{
+  "rules": {
+    ".read": "true",
+    "posts": {
+      "$post_id":{
+        ".write": "auth.uid == data.child('user_uid').val() || !data.exists() && auth != null",
+        ".validate": "newData.hasChildren(['details', 'text', 'timestamp', 'user_uid'])",
+        "comments": {
+          "$comment_id": {
+            ".write": "auth.uid == data.child('user_uid').val() || !data.exists() && auth != null",
+            ".validate": "!data.exists() && newData.exists() && newData.hasChildren(['text', 'timestamp', 'user_uid']) && newData.child('user_uid').val() == auth.uid"
+          }
+        }
+      }
+    },
+    "users": {
+      "$uid": {
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "sections": {
+      ".write": "auth != null && auth.isAdmin == true"
+    }
+  }
+}

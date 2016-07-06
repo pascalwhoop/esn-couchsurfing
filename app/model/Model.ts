@@ -16,11 +16,11 @@ export module Model {
     }
 
     export interface PostDetails {
-        city_name:string;
+        location:string;
         section_id: string;
         people:number;
-        stay_end:number;
-        stay_start:number;
+        stay_end:string;
+        stay_start:string;
     }
 
     export interface Post extends IAFListEntry{

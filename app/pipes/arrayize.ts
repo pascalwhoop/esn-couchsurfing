@@ -2,7 +2,7 @@ import {Pipe, PipeTransform} from "@angular/core";
 
 @Pipe({name: 'arrayize'})
 export class ArrayizePipe implements PipeTransform {
-    transform(input, cSort:string) : any {
+    transform(input, cSort:string, secLSort?:string) : any {
         let output = [];
         let sort = "key";
         //if custom sort defined
@@ -16,6 +16,7 @@ export class ArrayizePipe implements PipeTransform {
 
         //sort by the key defined. defaults to key sorting, can also be value sorting e.g.
         output = output.sort((a, b)=>{
+            if(secLSort) return a[sort][secLSort] > b[sort][secLSort] ? 1 : -1; 
             return a[sort] > b[sort] ? 1 : -1;
         });
         return output;

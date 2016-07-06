@@ -1,17 +1,28 @@
-<ion-header>
-    <ion-navbar>
-        <ion-title>
-            Settings
-        </ion-title>
-    </ion-navbar>
-</ion-header>
+<!--not logged in-->
+<ion-content padding *ngIf="!(af.auth | async)">
+    <ion-grid style="height: 100%;">
+        <ion-row center style="height: 100%;">
+            <ion-col>
+                <button (click)="login()" block> Login with <ion-icon name="logo-facebook"></ion-icon></button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
 
-<ion-content>
+<ion-content padding *ngIf="af.auth | async">
+    <h3>Profile</h3>
     <ion-list>
-        <ion-list-header>Follow us on Twitter</ion-list-header>
         <ion-item>
-            <ion-icon name="ionic" item-left></ion-icon>
-            @ionicframework
+            <ion-avatar item-left>
+                <img src="{{(af.auth | async )?.auth.photoURL}}">
+            </ion-avatar>
+            <h2>{{(af.auth | async )?.auth.displayName}}</h2>
+            <p>{{(af.auth | async )?.auth.email}}</p>
         </ion-item>
+
+        <p>What section are you part of?</p>
+        <section-selector></section-selector>
     </ion-list>
+    <button small danger (click)="logout()">Logout</button>
+
 </ion-content>

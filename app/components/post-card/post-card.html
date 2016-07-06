@@ -4,7 +4,12 @@
             <img src="{{(creator | async )?.photoURL}}">
         </ion-avatar>
         <h2>{{post.creator_name}}</h2>
+        <h3>{{post.details.location}}</h3>
 
+    </ion-item>
+
+    <ion-item>
+        <p>{{post.details.stay_start}} until {{post.details.stay_end}}</p>
     </ion-item>
 
     <ion-card-content>
