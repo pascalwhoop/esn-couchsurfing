@@ -1,7 +1,6 @@
 import {Component} from "@angular/core";
-import {AngularFire, AuthProviders, AuthMethods, AngularFireAuth, FirebaseAuthState} from "angularfire2/angularfire2";
-import {NavController} from "ionic-angular/index";
-import {AllPage} from "../all/all";
+import {AngularFire, AuthProviders, AuthMethods, AngularFireAuth} from "angularfire2/angularfire2";
+import {NavController, Toast} from "ionic-angular/index";
 import {SectionSelector} from "../../components/section-selection/section-selector";
 import {Model} from "../../model/Model";
 
@@ -28,26 +27,42 @@ export class SettingsPage {
             })
     }
 
-    cleanAuthObject(usr : firebase.User) : Model.PublicUserProfile{
+    cleanAuthObject(usr:firebase.User):Model.PublicUserProfile {
         return {
-            displayName:usr.displayName,
-            email:usr.email,
+            displayName: usr.displayName,
+            email: usr.email,
             emailVerified: usr.emailVerified,
-            isAnonymous:usr.isAnonymous,
-            photoURL:usr.photoURL,
-            providerData:usr.providerData,
-            uid:usr.uid
+            isAnonymous: usr.isAnonymous,
+            photoURL: usr.photoURL,
+            providerData: usr.providerData,
+            uid: usr.uid
         };
 
     }
-    
-    logout(){
+
+    logout() {
         this.auth.logout();
         location.reload();
     }
 
+    sectionSelected(section:Model.Section) {
+        this.af.auth.subscribe(res => {
+            let uid = res.auth.uid;
+            this.af.database.object('/users/' + uid + '/section_uid').set(section.subject_id).then(res => {
+                let toast =Toast.create(
+                    {
+                        message: 'Setion updated',
+                        duration: 1500
+                    });
+                this.navC.present(toast);
 
-    constructor(private navC: NavController, private auth:AngularFireAuth, private af:AngularFire) {
+            });
+
+        })
+    }
+
+
+    constructor(private navC:NavController, private auth:AngularFireAuth, private af:AngularFire) {
 
     }
 }

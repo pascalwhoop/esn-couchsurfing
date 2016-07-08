@@ -3,10 +3,12 @@ import {NavController, Modal} from "ionic-angular";
 import {NewTravelModal} from "./new-travel";
 import {AngularFire, FirebaseListObservable} from "angularfire2/angularfire2";
 import {PostCard} from "../../components/post-card/post-card";
+import {ReversePipe} from "../../pipes/reverse";
 
 @Component({
     templateUrl: 'build/pages/travel/travel.html',
-    directives: [PostCard]
+    directives: [PostCard],
+    pipes: [ReversePipe]
 })
 export class TravelPage {
 

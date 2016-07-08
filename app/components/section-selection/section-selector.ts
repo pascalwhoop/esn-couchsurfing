@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter} from "@angular/core";
+import {Component, Output, EventEmitter, Input} from "@angular/core";
 import {ArrayizePipe} from "../../pipes/arrayize";
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from "angularfire2/angularfire2";
 import {Model} from "../../model/Model";
@@ -17,8 +17,8 @@ import {Model} from "../../model/Model";
             <ion-item *ngIf="country">
                 <ion-label>City / Section</ion-label>
                 <ion-select [(ngModel)]="section"  (ngModelChange)="sectionSelected($event)">
-                    <ion-option *ngFor="let s of (sections| async) | arrayize: 'value:l'" [value]="s.value">{{
-                    s.value.l}}</ion-option>
+                    <ion-option *ngFor="let s of (sections| async) | arrayize:'value':display" [value]="s.value">{{
+                    s.value[display]}}</ion-option>
                 </ion-select>              
             </ion-item>
         `,
@@ -28,6 +28,10 @@ export class SectionSelector {
 
     countries:FirebaseObjectObservable<any>;
     sections:FirebaseListObservable<Model.Section[]>;
+
+    @Input()
+    display: string = "l";
+
 
     @Output()
     onSectionSelected: EventEmitter<Model.Section> = new EventEmitter<Model.Section>();
@@ -44,9 +48,6 @@ export class SectionSelector {
                 equalTo: countryCode
             }
         });
-        this.sections.subscribe(res=>{
-            console.log(res);
-        })
     }
 
     sectionSelected(section: Model.Section){

@@ -3,7 +3,8 @@
     <ion-grid style="height: 100%;">
         <ion-row center style="height: 100%;">
             <ion-col>
-                <button (click)="login()" block> Login with <ion-icon name="logo-facebook"></ion-icon></button>
+                <button (click)="login()" block class="btn-facebook"> Login with
+                    <ion-icon name="logo-facebook"></ion-icon></button>
             </ion-col>
         </ion-row>
     </ion-grid>
@@ -21,7 +22,7 @@
         </ion-item>
 
         <p>What section are you part of?</p>
-        <section-selector></section-selector>
+        <section-selector [display]="'sectionname'" (onSectionSelected)="sectionSelected($event)"></section-selector>
     </ion-list>
     <button small danger (click)="logout()">Logout</button>
 

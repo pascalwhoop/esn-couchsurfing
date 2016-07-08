@@ -18,11 +18,13 @@ import {SectionSelector} from "../../components/section-selection/section-select
             </ion-item>
             <ion-item>
                 <ion-label >Start</ion-label>
-                <ion-input [(ngModel)]="newPost.details.stay_start"  type="date"></ion-input>              
+                    <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="newPost.details.stay_start"></ion-datetime>
+                <!--<ion-input [(ngModel)]="newPost.details.stay_start"  type="date"></ion-input>-->              
             </ion-item>
             <ion-item>
                 <ion-label >End</ion-label>
-                <ion-input [(ngModel)]="newPost.details.stay_end"  type="date"></ion-input>              
+                <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="newPost.details.stay_end"></ion-datetime>
+                <!--<ion-input [(ngModel)]="newPost.details.stay_end"  type="date"></ion-input>    -->          
             </ion-item>
             <ion-item>
                 <ion-label># of People</ion-label>
@@ -65,8 +67,8 @@ export class NewTravelModal {
                 location: "",
                 section_id: "",
                 people: 1,
-                stay_end: "",
-                stay_start: ""
+                stay_end: this.getDateString(),
+                stay_start: this.getDateString()
             },
             text: "",
             timestamp: 0,
@@ -111,5 +113,9 @@ export class NewTravelModal {
 
     cancel() {
         this.viewCtrl.dismiss();
+    }
+
+    getDateString(){
+        return new Date().toISOString().slice(0,10)
     }
 }

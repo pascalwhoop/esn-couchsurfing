@@ -59,6 +59,7 @@ export module Model {
         photoURL:string;
         providerData:ProviderData[];
         uid:string;
+        section_uid?: string;
     }
     
     export interface ProviderData {

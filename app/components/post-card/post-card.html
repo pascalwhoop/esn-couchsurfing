@@ -4,15 +4,18 @@
             <img src="{{(creator | async )?.photoURL}}">
         </ion-avatar>
         <h2>{{post.creator_name}}</h2>
-        <h3>{{post.details.location}}</h3>
 
-    </ion-item>
 
-    <ion-item>
-        <p>{{post.details.stay_start}} until {{post.details.stay_end}}</p>
     </ion-item>
 
     <ion-card-content>
+        <p><span>City: </span>
+            <span class="bold">{{post.details.location}}</span>
+        </p>
+        <p><span>Dates: </span>
+            <span class="bold">{{post.details.stay_start}} until {{post.details.stay_end}}</span>
+        </p>
+        <br>
         <p>{{post.text}}</p>
     </ion-card-content>
 
@@ -40,10 +43,9 @@
 
     <!--comments list-->
     <div *ngIf="visible=='comments'">
-            <post-comment *ngFor="let comment of (comments | async) | reverse"
-                          [comment]="comment"></post-comment>
+        <post-comment *ngFor="let comment of (comments | async) | reverse"
+                      [comment]="comment"></post-comment>
     </div>
-
 
 
 </ion-card>

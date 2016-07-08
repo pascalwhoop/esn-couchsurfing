@@ -1,0 +1,40 @@
+$fb-white: #fff;
+$fb-blue: #3b5998;
+$fb-blue-dark: #2d4373;
+$fb-blue-extra-dark: #23345a;
+$fb-border: rgba(0, 0, 0, 0.2);
+
+.btn-facebook {
+  color: $fb-white;
+  background-color: $fb-blue;
+  border-color: $fb-border;
+
+  &:focus {
+    color: $fb-white;
+    background-color: $fb-blue-dark;
+    border-color: $fb-border;
+  }
+
+  &:hover {
+    color: $fb-white;
+    background-color: $fb-blue-dark;
+    border-color: $fb-border;
+  }
+
+  &:active, &.activated {
+    color: $fb-white;
+    background-color: $fb-blue-dark;
+    border-color: $fb-border;
+  }
+
+  &:active:hover {
+    color: $fb-white;
+    background-color: $fb-blue-extra-dark;
+    border-color: $fb-border
+  }
+
+  &[disabled]{
+    background-color: $fb-blue;
+    border-color: $fb-border
+  }
+}

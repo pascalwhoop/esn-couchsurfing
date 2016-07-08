@@ -8,10 +8,13 @@
 // App Shared Sass variables belong in app.variables.scss.
 
 @import "../pages/host/host";
-
 @import "../pages/travel/travel";
-
 @import "../pages/all/all";
+
+@import "../components/post-comment/post-comment";
+
+@import "app.branding";
+@import "app.custom.global";
 
 //fix?
 scroll-content{
