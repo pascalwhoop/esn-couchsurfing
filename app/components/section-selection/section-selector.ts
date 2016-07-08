@@ -1,7 +1,8 @@
 import {Component, Output, EventEmitter, Input} from "@angular/core";
 import {ArrayizePipe} from "../../pipes/arrayize";
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from "angularfire2/angularfire2";
-import {Model} from "../../model/Model";
+import {} from "../../model/Model";
+import {Section} from "../../model/Model";
 
 @Component({
     selector: 'section-selector',
@@ -27,14 +28,14 @@ import {Model} from "../../model/Model";
 export class SectionSelector {
 
     countries:FirebaseObjectObservable<any>;
-    sections:FirebaseListObservable<Model.Section[]>;
+    sections:FirebaseListObservable<Section[]>;
 
     @Input()
     display: string = "l";
 
 
     @Output()
-    onSectionSelected: EventEmitter<Model.Section> = new EventEmitter<Model.Section>();
+    onSectionSelected: EventEmitter<Section> = new EventEmitter<Section>();
 
 
     constructor(private af : AngularFire){
@@ -50,7 +51,7 @@ export class SectionSelector {
         });
     }
 
-    sectionSelected(section: Model.Section){
+    sectionSelected(section: Section){
         this.onSectionSelected.emit(section);
     }
 

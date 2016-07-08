@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from "@angular/core";
-import {Model} from "../../model/Model";
 import {
     AngularFire,
     FirebaseDatabase,
@@ -12,6 +11,7 @@ import {NavController} from "ionic-angular/index";
 import {PostComment} from "../post-comment/post-comment";
 import {PostReply} from "../post-reply/post-reply";
 import {ReversePipe} from "../../pipes/reverse";
+import {PublicUserProfile, Post} from "../../model/Model";
 
 
 @Component({
@@ -24,9 +24,9 @@ import {ReversePipe} from "../../pipes/reverse";
 export class PostCard implements OnInit {
 
     @Input()
-    post:Model.Post;
-    creator:FirebaseObjectObservable<Model.PublicUserProfile>;
-    comments:FirebaseListObservable<Model.Comment[]>;
+    post:Post;
+    creator:FirebaseObjectObservable<PublicUserProfile>;
+    comments:FirebaseListObservable<Comment[]>;
 
 
     private db:FirebaseDatabase;

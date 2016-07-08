@@ -1,10 +1,10 @@
 import {Component} from "@angular/core";
 import {ViewController, Loading, NavController} from "ionic-angular/index";
 import {AngularFire, FirebaseObjectObservable, FirebaseListObservable} from "angularfire2/angularfire2";
-import {Model} from "../../model/Model";
 import {ArrayizePipe} from "../../pipes/arrayize";
 import {AutoExpandDirective} from "../../directives/auto-expand";
 import {SectionSelector} from "../../components/section-selection/section-selector";
+import {Post, Section} from "../../model/Model";
 
 
 @Component({
@@ -56,7 +56,7 @@ import {SectionSelector} from "../../components/section-selection/section-select
 })
 export class NewTravelModal {
 
-    newPost:Model.Post;
+    newPost:Post;
 
 
     constructor(private navCtrl:NavController, private viewCtrl:ViewController, private af:AngularFire) {
@@ -85,7 +85,7 @@ export class NewTravelModal {
 
     }
 
-    sectionSelected(section: Model.Section){
+    sectionSelected(section: Section){
         this.newPost.details.section_id = section.subject_id;
         this.newPost.details.location = section.l;
     }

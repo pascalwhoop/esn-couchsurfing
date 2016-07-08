@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
 import {NavController} from "ionic-angular";
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from "angularfire2/angularfire2";
-import {Model} from "../../model/Model";
 import {PostCard} from "../../components/post-card/post-card";
 import {ReversePipe} from "../../pipes/reverse";
+import {Post, PublicUserProfile, Section} from "../../model/Model";
 
 
 @Component({
@@ -13,9 +13,9 @@ import {ReversePipe} from "../../pipes/reverse";
 })
 export class HostPage {
 
-    posts:FirebaseListObservable<Model.Post[]>;
-    publicUser : FirebaseObjectObservable<Model.PublicUserProfile>;
-    section: FirebaseListObservable<Model.Section[]>;
+    posts:FirebaseListObservable<Post[]>;
+    publicUser : FirebaseObjectObservable<PublicUserProfile>;
+    section: FirebaseListObservable<Section[]>;
 
     constructor(private nc:NavController, private af:AngularFire) {
 

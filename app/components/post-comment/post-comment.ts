@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from "@angular/core";
-import {Model} from "../../model/Model";
+import {PublicUserProfile} from "../../model/Model";
 import {AngularFire, FirebaseDatabase, FirebaseObjectObservable} from "angularfire2/angularfire2";
 import {TimeAgoPipe, FromUnixPipe} from "angular2-moment/index";
 
@@ -18,9 +18,9 @@ import {TimeAgoPipe, FromUnixPipe} from "angular2-moment/index";
 export class PostComment implements OnChanges{
 
     @Input()
-    comment : Model.Comment;
+    comment : Comment;
 
-    creator :FirebaseObjectObservable<Model.PublicUserProfile>;
+    creator :FirebaseObjectObservable<PublicUserProfile>;
 
     private db : FirebaseDatabase;
 

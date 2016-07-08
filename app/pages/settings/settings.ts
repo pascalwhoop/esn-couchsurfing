@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {AngularFire, AuthProviders, AuthMethods, AngularFireAuth} from "angularfire2/angularfire2";
 import {NavController, Toast} from "ionic-angular/index";
 import {SectionSelector} from "../../components/section-selection/section-selector";
-import {Model} from "../../model/Model";
+import {Section, PublicUserProfile} from "../../model/Model";
 
 
 @Component({
@@ -27,7 +27,7 @@ export class SettingsPage {
             })
     }
 
-    cleanAuthObject(usr:firebase.User):Model.PublicUserProfile {
+    cleanAuthObject(usr:firebase.User):PublicUserProfile {
         return {
             displayName: usr.displayName,
             email: usr.email,
@@ -45,7 +45,7 @@ export class SettingsPage {
         location.reload();
     }
 
-    sectionSelected(section:Model.Section) {
+    sectionSelected(section:Section) {
         this.af.auth.subscribe(res => {
             let uid = res.auth.uid;
             this.af.database.object('/users/' + uid + '/section_uid').set(section.subject_id).then(res => {
