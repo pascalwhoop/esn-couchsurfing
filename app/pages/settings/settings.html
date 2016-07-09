@@ -12,7 +12,8 @@
 
 <ion-content padding *ngIf="af.auth | async">
     <h3>Profile</h3>
-    <ion-list>
+    <ion-list no-lines>
+        <!--static info from provider-->
         <ion-item>
             <ion-avatar item-left>
                 <img src="{{(af.auth | async )?.auth.photoURL}}">
@@ -21,8 +22,15 @@
             <p>{{(af.auth | async )?.auth.email}}</p>
         </ion-item>
 
-        <p>What section are you part of?</p>
-        <section-selector [display]="'sectionname'" (onSectionSelected)="sectionSelected($event)"></section-selector>
+        <!--already selected section -> change it -->
+        <ion-item *ngIf="(profile| async)?.section_uid && !edit">
+            <p>Section: {{section?.sectionname}}</p>
+            <button small (click)="edit = true">Change section</button>
+        </ion-item>
+        <ion-item *ngIf="!(profile| async)?.section_uid || edit">
+            <p>What section are you part of?</p>
+            <section-selector [display]="'sectionname'" (onSectionSelected)="sectionSelected($event)"></section-selector>
+        </ion-item>
     </ion-list>
     <button small danger (click)="logout()">Logout</button>
 

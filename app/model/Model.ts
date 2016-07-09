@@ -68,14 +68,6 @@ export interface ProviderData {
     uid:string;
 }
 
-/* Sections */
-export interface EsnSection extends IAFListEntry, IUid {
-    name:string,
-    city:string,
-    university:string
-    tags?:string
-    url ?:string
-    fbUrl ?:string
-}
+
 
 

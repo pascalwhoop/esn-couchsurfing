@@ -1,14 +1,24 @@
 <ion-content class="home">
     <!--just to push content down, not actually used-->
-  <ion-toolbar *ngIf="!(af.auth | async)" light>
-    <ion-title>Login to reply and interact</ion-title>
-    <ion-buttons end>
-      <button (click)="showSettings()">
-        <ion-icon name="power"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-toolbar>
-    <post-card [post]="post" *ngFor="let post of (posts | async) | reverse"></post-card>
+    <ion-toolbar *ngIf="!(af.auth | async)" light>
+        <ion-title>Login to reply and interact</ion-title>
+        <ion-buttons end>
+            <button (click)="showSettings()">
+                <ion-icon name="power"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+    <ion-list [virtualScroll]="posts" no-lines>
+        <div *virtualItem="let post" style="width: 100%">
+            <post-card [post]="post" ></post-card>
+            <div style="height:10px"></div>
+        </div>
+    </ion-list>
+
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
 </ion-content>
 
 

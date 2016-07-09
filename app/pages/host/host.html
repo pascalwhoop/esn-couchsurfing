@@ -1,11 +1,3 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Host
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content>
     <post-card [post]="post" *ngFor="let post of (posts | async) | reverse"></post-card>
 </ion-content>

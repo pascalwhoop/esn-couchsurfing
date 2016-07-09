@@ -11,7 +11,7 @@ import {Post, Section} from "../../model/Model";
     template: `
     <ion-content padding>
         <h2>New couchsurfing request</h2>
-        <ion-list>
+        <ion-list no-lines>
             <ion-item>
                 <ion-label floating>Message</ion-label>
                 <ion-textarea [(ngModel)]="newPost.text"  txautoexpand></ion-textarea>

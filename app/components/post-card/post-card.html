@@ -13,7 +13,10 @@
             <span class="bold">{{post.details.location}}</span>
         </p>
         <p><span>Dates: </span>
-            <span class="bold">{{post.details.stay_start}} until {{post.details.stay_end}}</span>
+            <span class="bold">
+                {{post.details.stay_start | amDateFormat:'dddd MMM Do'}} until {{post.details.stay_end |
+                amDateFormat:'dddd MMM Do'}}
+            </span>
         </p>
         <br>
         <p>{{post.text}}</p>

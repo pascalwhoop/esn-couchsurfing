@@ -6,7 +6,7 @@ import {
     FirebaseObjectObservable,
     FirebaseAuth
 } from "angularfire2/angularfire2";
-import {TimeAgoPipe, FromUnixPipe} from "angular2-moment/index";
+import {TimeAgoPipe, FromUnixPipe, DateFormatPipe} from "angular2-moment/index";
 import {NavController} from "ionic-angular/index";
 import {PostComment} from "../post-comment/post-comment";
 import {PostReply} from "../post-reply/post-reply";
@@ -18,7 +18,7 @@ import {PublicUserProfile, Post} from "../../model/Model";
     templateUrl: 'build/components/post-card/post-card.html',
     selector: 'post-card',
     directives: [PostComment, PostReply],
-    pipes: [TimeAgoPipe, FromUnixPipe, ReversePipe],
+    pipes: [TimeAgoPipe, FromUnixPipe, ReversePipe, DateFormatPipe],
 
 })
 export class PostCard implements OnInit {
