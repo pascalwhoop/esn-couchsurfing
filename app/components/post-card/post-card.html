@@ -42,7 +42,7 @@
         </ion-col>
     </ion-row>
 
-    <post-reply [postId]="post.$key" *ngIf="visible=='reply'"></post-reply>
+    <post-reply [postId]="post.$key" *ngIf="visible=='reply'" (onPosted)="visible = 'comments'"></post-reply>
 
     <!--comments list-->
     <div *ngIf="visible=='comments'">

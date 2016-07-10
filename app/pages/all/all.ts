@@ -39,8 +39,7 @@ export class AllPage {
         //reverse array --> new to old
         newPosts.reverse();
 
-        console.log("newPagingFlag " + this.pagingFlag.details.location + " " + new Date(this.pagingFlag.timestamp).toISOString());
-        console.log(newPosts);
+
 
 
         newPosts.forEach(val=>this.posts.push(val));

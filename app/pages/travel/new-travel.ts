@@ -95,13 +95,15 @@ export class NewTravelModal {
 
     submit() {
         this.newPost.timestamp = new Date().getTime();
-        this.backend.posts().push(this.newPost);
 
         let loading = Loading.create({
-            content: "Please wait...",
-            duration: 500
+            content: "Submitting ..."
         });
-        this.navCtrl.present(loading).then(()=> {
+        this.navCtrl.present(loading);
+
+        //when post done, destroy loading and dismiss current view
+        this.backend.posts().push(this.newPost).then(res=>{
+            loading.destroy();
             this.viewCtrl.dismiss();
         });
 

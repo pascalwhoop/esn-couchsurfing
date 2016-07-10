@@ -1,12 +1,15 @@
 import {Injectable} from "@angular/core";
 import {
     AngularFire,
-    FirebaseDatabase, AngularFireAuth, FirebaseListObservable, FirebaseObjectObservable
+    FirebaseDatabase,
+    AngularFireAuth,
+    FirebaseListObservable,
+    FirebaseObjectObservable
 } from "angularfire2/angularfire2";
 import {Post, PublicUserProfile, Section} from "../model/Model";
 import {Query} from "angularfire2/es6/utils/query_observable";
-import {Observable} from "rxjs/Rx";
 import User = firebase.User;
+import {PostComment} from "../components/post-comment/post-comment";
 
 
 @Injectable()
@@ -27,6 +30,10 @@ export class FirebaseObservablesFactory {
         if (endAt) query.endAt = endAt.$key;
 
         return this.posts(query);
+    }
+
+    comments(postUid:string) {
+        return this.af.database.list('/posts/' + postUid + '/comments');
     }
 
     postsPerLocation(location:string) {
@@ -87,7 +94,7 @@ export class FirebaseObservablesFactory {
         });
     }
 
-    auth():AngularFireAuth{
+    auth():AngularFireAuth {
         return this.af.auth;
     }
 
