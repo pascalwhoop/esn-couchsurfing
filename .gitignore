@@ -1,6 +1,7 @@
 # Specifies files to intentionally ignore when using Git
 # http://git-scm.com/docs/gitignore
 
+*.iml
 node_modules/
 www/build/
 www/sw.js
@@ -9,3 +10,4 @@ plugins/
 *.swp
 .DS_Store
 Thumbs.db
+typings/

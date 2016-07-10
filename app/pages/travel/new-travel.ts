@@ -5,6 +5,7 @@ import {ArrayizePipe} from "../../pipes/arrayize";
 import {AutoExpandDirective} from "../../directives/auto-expand";
 import {SectionSelector} from "../../components/section-selection/section-selector";
 import {Post, Section} from "../../model/Model";
+import {FirebaseObservablesFactory} from "../../services/firebase-observables-factory";
 
 
 @Component({
@@ -51,7 +52,8 @@ import {Post, Section} from "../../model/Model";
     </ion-content>
         `,
     pipes: [],
-    directives: [AutoExpandDirective, SectionSelector]
+    directives: [AutoExpandDirective, SectionSelector],
+    providers: [FirebaseObservablesFactory]
 
 })
 export class NewTravelModal {
@@ -59,7 +61,7 @@ export class NewTravelModal {
     newPost:Post;
 
 
-    constructor(private navCtrl:NavController, private viewCtrl:ViewController, private af:AngularFire) {
+    constructor(private navCtrl:NavController, private viewCtrl:ViewController, private backend: FirebaseObservablesFactory ) {
 
         this.newPost = {
             creator_name: "",
@@ -75,12 +77,13 @@ export class NewTravelModal {
             user_uid: ""
         };
 
-        this.af.auth.subscribe(res => {
-            if (!res.auth.providerData[0]) return;
-            let fbProfile = res.auth.providerData[0];
+        backend.publicUserProfile().subscribe(res=>{
+            if (!res.providerData[0]) return;
+            let fbProfile = res.providerData[0];
             this.newPost.creator_name = fbProfile.displayName;
-            this.newPost.user_uid = res.auth.uid;
+            this.newPost.user_uid = res.uid;
         })
+
 
 
     }
@@ -92,7 +95,7 @@ export class NewTravelModal {
 
     submit() {
         this.newPost.timestamp = new Date().getTime();
-        this.af.database.list("/posts/").push(this.newPost);
+        this.backend.posts().push(this.newPost);
 
         let loading = Loading.create({
             content: "Please wait...",

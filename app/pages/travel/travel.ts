@@ -4,26 +4,21 @@ import {NewTravelModal} from "./new-travel";
 import {AngularFire, FirebaseListObservable} from "angularfire2/angularfire2";
 import {PostCard} from "../../components/post-card/post-card";
 import {ReversePipe} from "../../pipes/reverse";
+import {FirebaseObservablesFactory} from "../../services/firebase-observables-factory";
 
 @Component({
     templateUrl: 'build/pages/travel/travel.html',
     directives: [PostCard],
-    pipes: [ReversePipe]
+    pipes: [ReversePipe],
+    providers:[FirebaseObservablesFactory]
 })
 export class TravelPage {
 
     posts:FirebaseListObservable<any>;
 
-    constructor(private nc:NavController, private af:AngularFire) {
-        af.auth.subscribe(res => {
-            if (!res.auth.uid) return;
-            let uid = res.auth.uid;
-            this.posts = af.database.list('posts', {
-                query: {
-                    orderByChild: 'user_uid',
-                    equalTo: uid
-                }
-            });
+    constructor(private nc:NavController, private backend: FirebaseObservablesFactory) {
+        backend.publicUserProfile().subscribe(res=>{
+            this.posts = backend.postsPerUser(res.uid);
         });
     }
 

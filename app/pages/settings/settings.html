@@ -1,5 +1,5 @@
 <!--not logged in-->
-<ion-content padding *ngIf="!(af.auth | async)">
+<ion-content padding *ngIf="!profile">
     <ion-grid style="height: 100%;">
         <ion-row center style="height: 100%;">
             <ion-col>
@@ -10,16 +10,16 @@
     </ion-grid>
 </ion-content>
 
-<ion-content padding *ngIf="af.auth | async">
+<ion-content padding *ngIf="profile">
     <h3>Profile</h3>
     <ion-list no-lines>
         <!--static info from provider-->
         <ion-item>
             <ion-avatar item-left>
-                <img src="{{(af.auth | async )?.auth.photoURL}}">
+                <img src="{{(backend.auth() | async )?.auth.photoURL}}">
             </ion-avatar>
-            <h2>{{(af.auth | async )?.auth.displayName}}</h2>
-            <p>{{(af.auth | async )?.auth.email}}</p>
+            <h2>{{(backend.auth() | async )?.auth.displayName}}</h2>
+            <p>{{(backend.auth() | async )?.auth.email}}</p>
         </ion-item>
 
         <!--already selected section -> change it -->
@@ -31,7 +31,10 @@
             <p>What section are you part of?</p>
             <section-selector [display]="'sectionname'" (onSectionSelected)="sectionSelected($event)"></section-selector>
         </ion-item>
+        <ion-item>
+            <button small danger (click)="logout()">Logout</button>
+        </ion-item>
     </ion-list>
-    <button small danger (click)="logout()">Logout</button>
+
 
 </ion-content>

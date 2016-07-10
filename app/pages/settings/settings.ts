@@ -6,11 +6,13 @@ import {
 import {NavController, Toast} from "ionic-angular/index";
 import {SectionSelector} from "../../components/section-selection/section-selector";
 import {Section, PublicUserProfile} from "../../model/Model";
+import {FirebaseObservablesFactory} from "../../services/firebase-observables-factory";
 
 
 @Component({
     templateUrl: 'build/pages/settings/settings.html',
-    directives: [SectionSelector]
+    directives: [SectionSelector],
+    providers: [FirebaseObservablesFactory]
 })
 export class SettingsPage {
 
@@ -19,10 +21,13 @@ export class SettingsPage {
     section : Section;
     edit: boolean = false;
 
-    constructor(private navC:NavController, private auth:AngularFireAuth, private af:AngularFire) {
+    constructor(private backend: FirebaseObservablesFactory, private navC:NavController, private auth:AngularFireAuth, private af:AngularFire) {
         auth.subscribe(res =>{
-            this.profile = af.database.object('/users/' + res.uid);
-            this.profile.subscribe(res =>this.getSection(res));
+            if(res){
+                this.profile = af.database.object('/users/' + res.uid);
+                this.profile.subscribe(res =>this.getSection(res));
+            }
+            
         })
     }
 
@@ -38,10 +43,6 @@ export class SettingsPage {
 
         })
 
-    }
-
-    changeSection(){
-        
     }
 
 

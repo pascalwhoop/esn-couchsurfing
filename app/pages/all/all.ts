@@ -20,12 +20,11 @@ export class AllPage {
     posts: Post[];
 
     auth : any;
-    offset: number = 0;
     pagingFlag: Post;
 
 
 
-    constructor(private backend: FirebaseObservablesFactory, private navController:NavController, private af: AngularFire) {
+    constructor(private backend: FirebaseObservablesFactory, private navController:NavController) {
         backend.latestPosts().subscribe((res)=>this.pushNew(res));
         this.posts = [];
     }
@@ -52,7 +51,6 @@ export class AllPage {
     }
 
     doInfinite(infiniteScroll: InfiniteScroll){
-        this.offset += 2;
 
         this.backend.latestPosts(this.pagingFlag).subscribe((res)=>{
             this.pushNew(res);
