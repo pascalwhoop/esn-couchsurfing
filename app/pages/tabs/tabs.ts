@@ -4,7 +4,8 @@ import {HostPage} from "../host/host";
 import {TravelPage} from "../travel/travel";
 import {SettingsPage} from "../settings/settings";
 import {AngularFireAuth, AngularFire} from "angularfire2/angularfire2";
-import {Tabs} from "ionic-angular/index";
+import {Tabs, NavController} from "ionic-angular/index";
+import {FeedbackHelper} from "../../services/user-feedback-helpers";
 
 
 @Component({
@@ -21,7 +22,7 @@ export class TabsPage {
     private settings:any;
     
 
-    constructor(private af:AngularFire) {
+    constructor(private af:AngularFire, private navCtrl: NavController, private l: FeedbackHelper) {
         // this tells the tabs component which Pages
         // should be each tab's root Page
         this.all = AllPage;
@@ -29,6 +30,8 @@ export class TabsPage {
         this.host = HostPage;
         this.travel = TravelPage;
         this.settings = SettingsPage;
+
+        l.showLoading(this.navCtrl);
 
 
         

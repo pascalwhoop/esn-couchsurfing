@@ -102,7 +102,9 @@ export class NewTravelModal {
         this.navCtrl.present(loading);
 
         //when post done, destroy loading and dismiss current view
-        this.backend.posts().push(this.newPost).then(res=>{
+        let posts = this.backend.posts({}); //adding {} as parameter to get the .push which is not there if we
+                                            // supply the defualt query for some reason
+        posts.push(this.newPost).then(res=>{
             loading.destroy();
             this.viewCtrl.dismiss();
         });

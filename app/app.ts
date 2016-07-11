@@ -5,6 +5,7 @@ import {TabsPage} from "./pages/tabs/tabs";
 import {defaultFirebase, FIREBASE_PROVIDERS, AngularFire} from "angularfire2";
 import {FIREBASE_CONFIG} from "./services/config";
 import {ServiceWorkerSingleton} from "./services/service-worker-install";
+import {FeedbackHelper} from "./services/user-feedback-helpers";
 
 @Component({
     template: '<ion-nav [root]="rootPage"></ion-nav>',
@@ -23,20 +24,21 @@ export class MyApp {
         //this.auth = auth;
         this.af = af;
         this.rootPage = TabsPage;
-
+        
 
         platform.ready().then(() => {
             //installing service worker and registering updates when needed
             ServiceWorkerSingleton.registerServiceWorker();
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
-            StatusBar.styleDefault();
+            //StatusBar.styleDefault();
         });
     }
 }
 
 ionicBootstrap(MyApp,
     [
+        FeedbackHelper,
         FIREBASE_PROVIDERS,
         defaultFirebase(FIREBASE_CONFIG)
     ]);

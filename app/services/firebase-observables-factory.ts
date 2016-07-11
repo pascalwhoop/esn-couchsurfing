@@ -57,9 +57,9 @@ export class FirebaseObservablesFactory {
     /**
      * core posts query. Takes a query object or uses a default one
      * @param query
-     * @returns {FirebaseListObservable<any[]>}
+     * @returns {FirebaseListObservable<Post[]>}
      */
-    posts(query?:Query):FirebaseListObservable<any[]> {
+    posts(query?:Query):FirebaseListObservable<Post[]> {
         query = query ? query : {
             orderByKey: true,
             limitToLast: this.PAGE_SIZE,
@@ -99,6 +99,8 @@ export class FirebaseObservablesFactory {
     }
 
     section(uid:string):FirebaseListObservable<Section[]> {
+        console.log("getting sections filtered by: " + uid);
+
         return this.af.database.list('sections', {
             query: {
                 orderByChild: 'subject_id',

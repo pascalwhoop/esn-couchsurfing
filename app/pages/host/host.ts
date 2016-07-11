@@ -20,6 +20,9 @@ export class HostPage {
 
     constructor(private nc:NavController, private backend : FirebaseObservablesFactory) {
         backend.publicUserProfile().subscribe(res =>{
+            console.log("user profile response: ");
+            console.log(res);
+
             backend.section(res.section_uid).subscribe(res=>{
                 this.setPostsFor(res[0].l);
             })

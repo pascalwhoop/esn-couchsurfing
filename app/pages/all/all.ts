@@ -8,6 +8,7 @@ import {SettingsPage} from "../settings/settings";
 import {ReversePipe} from "../../pipes/reverse";
 import {FirebaseObservablesFactory} from "../../services/firebase-observables-factory";
 import {Post} from "../../model/Model";
+import {FeedbackHelper} from "../../services/user-feedback-helpers";
 
 @Component({
     templateUrl: 'build/pages/all/all.html',
@@ -24,8 +25,13 @@ export class AllPage {
 
 
 
-    constructor(private backend: FirebaseObservablesFactory, private navController:NavController) {
-        backend.latestPosts().subscribe((res)=>this.pushNew(res));
+    constructor(private backend: FirebaseObservablesFactory, private navController:NavController, private l: FeedbackHelper) {
+        backend.latestPosts().subscribe((res)=>{
+            this.pushNew(res);
+            l.hideLoading();
+        }, err =>{
+            l.hideLoading();
+        });
         this.posts = [];
     }
 
