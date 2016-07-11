@@ -1,12 +1,10 @@
 import {Component} from "@angular/core";
-import {
-    AngularFire, AuthProviders, AuthMethods, AngularFireAuth,
-    FirebaseObjectObservable, FirebaseListObservable
-} from "angularfire2/angularfire2";
+import {AuthProviders, AuthMethods, FirebaseObjectObservable} from "angularfire2/angularfire2";
 import {NavController, Toast} from "ionic-angular/index";
 import {SectionSelector} from "../../components/section-selection/section-selector";
 import {Section, PublicUserProfile} from "../../model/Model";
 import {FirebaseObservablesFactory} from "../../services/firebase-observables-factory";
+
 
 
 @Component({
@@ -16,38 +14,38 @@ import {FirebaseObservablesFactory} from "../../services/firebase-observables-fa
 })
 export class SettingsPage {
 
-    profile : FirebaseObjectObservable<PublicUserProfile>;
+    profile:FirebaseObjectObservable<PublicUserProfile>;
     //section : FirebaseListObservable<Section[]>;
-    section : Section;
-    edit: boolean = false;
+    section:Section;
+    edit:boolean = false;
 
-    constructor(private backend: FirebaseObservablesFactory, private navC:NavController, private auth:AngularFireAuth, private af:AngularFire) {
-        auth.subscribe(res =>{
-            if(res){
-                this.profile = af.database.object('/users/' + res.uid);
+    constructor(private navC:NavController,
+
+                private backend:FirebaseObservablesFactory) {
+
+        backend.auth().subscribe(res => {
+            if (res) {
+                this.profile = backend.publicUserProfile(res.uid);
                 this.profile.subscribe(res =>this.getSection(res));
             }
-            
+
         })
     }
 
-    getSection(profile : PublicUserProfile){
-        this.af.database.list('/sections/', {
-                query: {
-                    orderByChild: 'subject_id',
-                    equalTo: profile.section_uid,
-                }
-            }).subscribe(res=>{
-            this.section = res[0];
-            console.log(res);
-
-        })
+    getSection(profile:PublicUserProfile) {
+        if(profile.section_uid){
+            this.backend.section(profile.section_uid, true)
+                .subscribe(res=> {
+                    this.section = res[0];
+                    console.log(res);
+                });
+        }
 
     }
 
 
     login() {
-        this.auth.login({
+        this.backend.auth().login({
             provider: AuthProviders.Facebook,
             method: AuthMethods.Popup,
             scope: ['user_hometown']
@@ -55,7 +53,7 @@ export class SettingsPage {
             .then(result => {
                 this.navC.pop();
                 let publicProfile = this.cleanAuthObject(result.auth);
-                this.af.database.object('/users/' + result.auth.uid).set(publicProfile);
+                this.backend.publicUserProfile(result.auth.uid).set(publicProfile);
             })
             .catch((error:any) => {
 
@@ -76,14 +74,14 @@ export class SettingsPage {
     }
 
     logout() {
-        this.auth.logout();
+        this.backend.auth().logout();
         location.reload();
     }
 
     sectionSelected(section:Section) {
-        this.af.auth.subscribe(res => {
+        this.backend.auth().subscribe(res => {
             let uid = res.auth.uid;
-            this.af.database.object('/users/' + uid + '/section_uid').set(section.subject_id).then(res => {
+            this.backend.publicUserProfile(uid + '/section_uid').set(section.subject_id).then(res => {
                 let toast = Toast.create(
                     {
                         message: 'Setion updated',

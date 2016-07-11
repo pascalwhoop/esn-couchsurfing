@@ -30,10 +30,6 @@ export class TabsPage {
         this.host = HostPage;
         this.travel = TravelPage;
         this.settings = SettingsPage;
-
-        l.showLoading(this.navCtrl);
-
-
         
     }
     

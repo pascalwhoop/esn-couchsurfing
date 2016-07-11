@@ -25,12 +25,10 @@ export class AllPage {
 
 
 
-    constructor(private backend: FirebaseObservablesFactory, private navController:NavController, private l: FeedbackHelper) {
-        backend.latestPosts().subscribe((res)=>{
+    constructor(private backend: FirebaseObservablesFactory, private navController:NavController) {
+        backend.latestPosts(null, true).subscribe((res)=>{
             this.pushNew(res);
-            l.hideLoading();
         }, err =>{
-            l.hideLoading();
         });
         this.posts = [];
     }

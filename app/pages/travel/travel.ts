@@ -18,16 +18,11 @@ export class TravelPage {
 
     posts:FirebaseListObservable<any>;
 
-    constructor(private nc:NavController, private backend: FirebaseObservablesFactory, private l: FeedbackHelper) {
+    constructor(private nc:NavController, private backend: FirebaseObservablesFactory) {
         
-        this.l.showLoading(nc);
         backend.publicUserProfile().subscribe(res=>{
-            this.posts = backend.postsPerUser(res.uid);
-            this.l.hideLoading();
-            setTimeout(()=>this.l.hideLoading(), 10); //fix because  loading doesnt hide if hidden right away
+            this.posts = backend.postsPerUser(res.uid, true);
         }, err =>{
-            this.l.hideLoading();
-            this.l.oops(this.nc);
         });
     }
 

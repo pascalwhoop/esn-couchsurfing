@@ -30,7 +30,6 @@ export class HostPage {
     }
     
     setPostsFor(location: string){
-        this.posts = this.backend.postsPerLocation(location);
+        this.posts = this.backend.postsPerLocation(location, true);
     }
-
 }

@@ -3,6 +3,9 @@ import {ArrayizePipe} from "../../pipes/arrayize";
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from "angularfire2/angularfire2";
 import {} from "../../model/Model";
 import {Section} from "../../model/Model";
+import {NavController} from "ionic-angular/index";
+import {FeedbackHelper} from "../../services/user-feedback-helpers";
+import {FirebaseObservablesFactory} from "../../services/firebase-observables-factory";
 
 @Component({
     selector: 'section-selector',
@@ -38,17 +41,17 @@ export class SectionSelector {
     onSectionSelected: EventEmitter<Section> = new EventEmitter<Section>();
 
 
-    constructor(private af : AngularFire){
-        this.countries = af.database.object('/countries');
+    constructor(private backend: FirebaseObservablesFactory){
+        this.countries = backend.object('/countries', undefined , true);
     }
 
     countrySelected(countryCode:string) {
-        this.sections = this.af.database.list('sections', {
+        this.sections = this.backend.list('sections', {
             query: {
                 orderByChild: 'c',
                 equalTo: countryCode
             }
-        });
+        }, true);
     }
 
     sectionSelected(section: Section){
