@@ -82,13 +82,11 @@ export class FirebaseObservablesFactory {
      */
     list(urlOrRef:string | firebase.database.Reference, opts?:FirebaseListFactoryOpts, blocking?:boolean):FirebaseListObservable<any[]> {
         if (blocking) this.l.showLoading(this.nc);
-        console.log("called backend !");
         let obs = this.db.list(urlOrRef, opts);
         //hide loading on first answer from server and unsubscribe
         let dispo = obs.subscribe(res=> {
             //hack. sometimes this gets called synchronously which is annoying because dispo is not yet set..
             setTimeout(()=>{
-                console.log("backend answered!");
                 if (blocking) this.l.hideLoading();
                 dispo.unsubscribe();
             }, 1)
@@ -107,7 +105,6 @@ export class FirebaseObservablesFactory {
      * @returns {FirebaseObjectObservable<any>}
      */
     object(urlOrRef:string | firebase.database.Reference, opts?:FirebaseObjectFactoryOpts, blocking?:boolean):FirebaseObjectObservable<any> {
-        console.log("called backend !");
         if (blocking) this.l.showLoading(this.nc);
         let obs = this.db.object(urlOrRef, opts);
         //hide loading on first answer from server and unsubscribe
@@ -115,7 +112,6 @@ export class FirebaseObservablesFactory {
         let dispo = obs.subscribe(res=> {
             //hack. sometimes this gets called synchronously which is annoying because dispo is not yet set..
             setTimeout(()=> {
-                console.log("backend answered!");
                 if (blocking) this.l.hideLoading();
                 dispo.unsubscribe();
             }, 1)
